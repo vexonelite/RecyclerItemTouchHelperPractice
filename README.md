@@ -1,0 +1,2 @@
+# RecyclerItemTouchHelperPractice
+Recyclerview works with ItemTouchHelper
