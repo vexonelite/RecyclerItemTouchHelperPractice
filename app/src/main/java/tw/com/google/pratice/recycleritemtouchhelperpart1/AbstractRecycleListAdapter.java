@@ -1,6 +1,7 @@
 package tw.com.google.pratice.recycleritemtouchhelperpart1;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
@@ -18,12 +19,12 @@ public abstract class AbstractRecycleListAdapter<V, K extends RecyclerView.ViewH
     private List<V> mData = new ArrayList<V>();
     private int mNumberOfTypes = 1;
 
+    @NonNull
+    @Override
+    public abstract K onCreateViewHolder(@NonNull ViewGroup viewGroup, int i);
 
     @Override
-    public abstract K onCreateViewHolder(ViewGroup viewGroup, int i);
-
-    @Override
-    public abstract void onBindViewHolder(K k, int i);
+    public abstract void onBindViewHolder(@NonNull K k, int i);
 
     @Override
     public int getItemCount() {

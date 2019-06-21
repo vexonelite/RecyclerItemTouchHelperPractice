@@ -16,9 +16,11 @@
 
 package tw.com.google.pratice.recycleritemtouchhelperpart1;
 
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import android.util.Log;
 
 /**
@@ -53,7 +55,8 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     }
 
     @Override
-    public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+    public int getMovementFlags(@NonNull RecyclerView recyclerView,
+                                @NonNull RecyclerView.ViewHolder viewHolder) {
         Log.i(mTag, "getMovementFlags: ");
         // Set movement flags based on the layout manager
         if (recyclerView.getLayoutManager() instanceof GridLayoutManager) {
@@ -68,7 +71,9 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     }
 
     @Override
-    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder source, RecyclerView.ViewHolder target) {
+    public boolean onMove(@NonNull RecyclerView recyclerView,
+                          @NonNull RecyclerView.ViewHolder source,
+                          @NonNull RecyclerView.ViewHolder target) {
         if (source.getItemViewType() != target.getItemViewType()) {
             return false;
         }
@@ -80,7 +85,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     }
 
     @Override
-    public void onSwiped(RecyclerView.ViewHolder viewHolder, int i) {
+    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         Log.i(mTag, "onSwiped: ");
         // Notify the adapter of the dismissal
         mAdapter.onItemDismiss(viewHolder.getAdapterPosition());
@@ -89,7 +94,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
 
     @Override
-    public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+    public void onSelectedChanged(@Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
         Log.i(mTag, "onSelectedChanged: " + actionState);
         mAdapter.onSelectedChanged(actionState);
         super.onSelectedChanged(viewHolder, actionState);

@@ -16,8 +16,8 @@
 
 package tw.com.google.pratice.recycleritemtouchhelperpart1;
 
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.ItemTouchHelper;
 
 /**
  * Interface to listen for a move or dismissal event from a {@link ItemTouchHelper.Callback}.
@@ -59,7 +59,7 @@ public interface ItemTouchHelperAdapter {
     /**
      * @author Vexon Elite (vexonelite)
      * @param actionState
-     * @see android.support.v7.widget.helper.ItemTouchHelper.Callback#onSelectedChanged(RecyclerView.ViewHolder, int)
+     * @see androidx.recyclerview.widget.ItemTouchHelper.Callback#onSelectedChanged(RecyclerView.ViewHolder, int)
      */
     void onSelectedChanged(int actionState);
 }

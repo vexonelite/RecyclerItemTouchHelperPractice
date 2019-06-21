@@ -1,63 +1,55 @@
 package tw.com.google.pratice.recycleritemtouchhelperpart1;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class MainActivity extends AppCompatActivity {
 
-    private LinearLayoutManager mLinearLayoutManager;
-    private RecyclerView mRecyclerView;
     private MyListAdapter mAdapter;
-
-    private ItemTouchHelper mItemTouchHelper;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        setupRecyclerView((RecyclerView) findViewById(R.id.recyclerView));
+        setupRecyclerView(findViewById(R.id.recyclerView));
     }
 
 
+    private void setupRecyclerView (@NonNull RecyclerView recyclerView) {
 
-    private void setupRecyclerView (RecyclerView recyclerView) {
-        if (null == recyclerView) {
-            return;
-        }
-
-        List<Integer> dataList = new ArrayList<>();
+        final List<Integer> dataList = new ArrayList<>();
         for (int i = 0; i < 30; i++) {
             dataList.add(i + 1);
         }
 
         mAdapter = new MyListAdapter();
-        ((MyListAdapter)mAdapter).appendNewDataSet(dataList, true);
+        mAdapter.appendNewDataSet(dataList, true);
 
-        mLinearLayoutManager = new LinearLayoutManager(this);
-        mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
 
-        mRecyclerView = recyclerView;
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mRecyclerView.setItemAnimator(null);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(null);
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setHasFixedSize(true);
 
-        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback((ItemTouchHelperAdapter)mAdapter);
-        mItemTouchHelper = new ItemTouchHelper(callback);
-        mItemTouchHelper.attachToRecyclerView(recyclerView);
-
+        final ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mAdapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
     private class MyListAdapter
@@ -66,15 +58,16 @@ public class MainActivity extends AppCompatActivity {
 
         private boolean isDragging = false;
 
+        @NonNull
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int position) {
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
             LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
             return new MyListItem( inflater.inflate(
                     R.layout.recyclerview_item, parent, false) );
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
             if (viewHolder instanceof MyListItem) {
                 MyListItem cell = (MyListItem) viewHolder;
                 cell.onBind(getObjectAtPosition(position), position);
@@ -130,14 +123,12 @@ public class MainActivity extends AppCompatActivity {
 
     private class MyListItem extends RecyclerView.ViewHolder {
 
-        private View mContainer;
         private TextView mLabelView;
 
         private MyListItem (View itemView) {
             super(itemView);
             //itemView.setBackgroundColor(mBackgroundColor);
-            mContainer = itemView;
-            mLabelView = (TextView) itemView.findViewById(R.id.label);
+            mLabelView = itemView.findViewById(R.id.label);
         }
 
         private void onBind (Integer item, int position) {
